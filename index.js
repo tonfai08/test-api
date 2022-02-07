@@ -8,9 +8,11 @@ app.use(express.json());
 //import Router
 const empRouter = require('./routes/emp')
 const leaveRouter = require('./routes/leave')
+const authRouter = require('./routes/auth')
 
 app.use('/emp', empRouter);
 app.use('/leave', leaveRouter);
+app.use('/auth', authRouter);
 
 app.get('/', (req,res) => {
     res.send('Hello World');
