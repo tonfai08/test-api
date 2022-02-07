@@ -9,10 +9,12 @@ app.use(express.json());
 const empRouter = require('./routes/emp')
 const leaveRouter = require('./routes/leave')
 const authRouter = require('./routes/auth')
+const jwtRouter = require('./routes/jwt')
 
 app.use('/emp', empRouter);
 app.use('/leave', leaveRouter);
 app.use('/auth', authRouter);
+app.use('/jwt', jwtRouter);
 
 app.get('/', (req,res) => {
     res.send('Hello World');
