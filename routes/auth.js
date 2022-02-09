@@ -20,7 +20,9 @@ router.post('/', async (req,res) => {
                       res.send({'status' : "error",'detail' : 'password ไม่ถูกต้อง'});
                     }
                     const token = jwtToken.sign(
-                        { email: result.email, 
+                        { 
+                          id: result._id,   
+                          email: result.email, 
                           first_name: result.first_name, 
                           last_name: result.last_name, 
                           role:result.role ,

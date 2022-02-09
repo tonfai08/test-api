@@ -57,7 +57,7 @@ router.get('/',checkLogin, checkAdmin, async (req,res) => {
 });
 router.get('/:id', async (req,res) => {
     try {
-        var result = await emp.find({_id:req.params.id}).exec();
+        var result = await emp.findOne({_id:req.params.id}).exec();
         res.send(result);
     }
     catch (error) {
