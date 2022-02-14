@@ -5,6 +5,8 @@ const leaveSchema = new Schema({
         empId: { type: String, required: false },
         leave_type: { type: String, required: false},
         date_leave: { type: [], required: false},
+        duration: { type: String, required: false},
+        approve: { type: String, required: false},
         approver: { type: String, required: false},
         note: { type: String, required: false},
         create_date : { type: Date, default : Date.now },

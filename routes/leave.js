@@ -53,10 +53,23 @@ router.get('/:id', async (req,res) => {
 
 router.post('/',checkLogin, async (req,res) => {
     try {
+        const daySum = (day) =>{
+        var arrayLength = day.length;
+        // for (var i = 0; i < arrayLength; i++) {
+        //     console.log(day[i]);
+        //     return day[i];
+        // }
+        const day1 = moment(day[0]);
+        const day2 = moment(day[arrayLength-1]);
+        console.log('moment',moment(day1).diff(day2, 'days'));
+          return moment(day2).diff(day1, 'days')+1 ;
+  
+      }
         const e = new leave({
             empId:req.body.empId,
             leave_type:req.body.leave_type,
             date_leave:req.body.date_leave,
+            duration:daySum(req.body.date_leave),
             note:req.body.note,
         });
         var result = await e.save();
@@ -76,30 +89,18 @@ router.post('/',checkLogin, async (req,res) => {
             return "ลาตุ้ย";
           }
         }
-        const daySum = (day) =>{
-          var arrayLength = day.length;
-          // for (var i = 0; i < arrayLength; i++) {
-          //     console.log(day[i]);
-          //     return day[i];
-          // }
-          const day1 = moment(day[0]);
-          const day2 = moment(day[arrayLength-1]);
-          console.log('moment',moment(day1).diff(day2, 'days'));
-            return moment(day2).diff(day1, 'days')+1 ;
-    
-       }
-        //console.log(req.user.email);
+        
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
               user: 'gipsicc.001@gmail.com',
-              pass: 'uifjldcvnltufajr'
+              pass: 'irkrrgiewvdkndtw'
             }
           });
           
           var mailOptions = {
             from: req.user.email,
-            to: 'wittawat.s@gipsic.com',
+            to: 'nutnicha.j@gipsic.com',
             subject: req.user.first_name+' '+req.user.last_name+' ลางานในวันที่ '+moment(e.date_leave[0]).format('YYYY/MM/DD'),
             html: req.user.first_name+' '+req.user.last_name+'<br>'+leaveType(e.leave_type)+' : '+moment(e.date_leave[0]).format('YYYY/MM/DD')+' - '+moment(e.date_leave[1]).format('YYYY/MM/DD')+'<br>'+'จำนวนวันที่ลา :'+daySum(e.date_leave)+'<br>'+'หมายเหตุ :'+e.note+'<br>'
           };
