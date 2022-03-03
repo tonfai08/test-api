@@ -41,6 +41,24 @@ router.get('/', async (req,res) => {
         res.status(400).send({error});
     }
 });
+router.get('/true', async (req,res) => {
+  try {
+      var result = await leave.find({approve:{$ne:null}});
+      res.send(result);
+  }
+  catch (error) {
+      res.status(400).send({error});
+  }
+});
+router.get('/wait', async (req,res) => {
+  try {
+      var result = await leave.find({approve:null});
+      res.send(result);
+  }
+  catch (error) {
+      res.status(400).send({error});
+  }
+});
 router.get('/:id', async (req,res) => {
     try {
         var result = await leave.find({empId:req.params.id}).exec();
@@ -67,6 +85,7 @@ router.post('/',checkLogin, async (req,res) => {
       }
         const e = new leave({
             empId:req.body.empId,
+            name:req.body.name,
             leave_type:req.body.leave_type,
             date_leave:req.body.date_leave,
             duration:daySum(req.body.date_leave),
@@ -123,6 +142,7 @@ router.put("/:id",  async (req, res) => {
     try {
         var e = await leave.findOne({_id:req.params.id}).exec();
         e.set(req.body);
+      
         var result = await e.save();
         res.send(result);
     } catch (error) { 
