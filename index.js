@@ -6,14 +6,12 @@ app.use(cors()) // Use this after the variable declaration
 // require('dotenv/config')
 app.use(express.json());
 //import Router
-const empRouter = require('./routes/emp')
-const leaveRouter = require('./routes/leave')
-const authRouter = require('./routes/auth')
+const dishTypeRouter = require('./routes/dishType')
+const dishRouter = require('./routes/dish')
 const jwtRouter = require('./routes/jwt')
 
-app.use('/emp', empRouter);
-app.use('/leave', leaveRouter);
-app.use('/auth', authRouter);
+app.use('/dishtype', dishTypeRouter);
+app.use('/dish', dishRouter);
 app.use('/jwt', jwtRouter);
 
 app.get('/', (req,res) => {
@@ -22,7 +20,7 @@ app.get('/', (req,res) => {
 
 //connect
 // const dburi = process.env.DB_CONNECTTION;
-  const dburl  ="mongodb+srv://tonbee159:rNIYkccq2M8WnMQ7@cluster0.jiicy.mongodb.net/gipsic_data";
+  const dburl  ="mongodb+srv://tonbee159:015665521@cluster0.qgqzi.mongodb.net/?retryWrites=true&w=majority";
   console.log("Connecting to DB...");
   mongoose.connect(dburl).catch(e => { 
     console.error("Error Connecting to DB"+e);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const emp = require('../models/emp')
+const dishType = require('../models/dishType')
 const jwt = require('../models/jwt')
 const jwtToken = require('jsonwebtoken');
 
@@ -41,14 +41,23 @@ const checkLogin = async(req,res,next) =>{
     next();
 }
 
-const checkAdmin = (req,res,next) =>{
-    console.log("checkAdmin", req.user.role)
-    next();
-}
+// const checkAdmin = (req,res,next) =>{
+//     console.log("checkAdmin", req.user.role)
+//     next();
+// }
 
-router.get('/',checkLogin, checkAdmin, async (req,res) => {
+// router.get('/',checkLogin, checkAdmin, async (req,res) => {
+//     try {
+//         var result = await dishType.find({  });
+//         res.send(result);
+//     }
+//     catch (error) {
+//         res.status(400).send({error});
+//     }
+// });
+router.get('/',async (req,res) => {
     try {
-        var result = await emp.find({  });
+        var result = await dishType.find({  });
         res.send(result);
     }
     catch (error) {
@@ -57,7 +66,7 @@ router.get('/',checkLogin, checkAdmin, async (req,res) => {
 });
 router.get('/:id', async (req,res) => {
     try {
-        var result = await emp.findOne({_id:req.params.id}).exec();
+        var result = await dishType.findOne({_id:req.params.id}).exec();
         res.send(result);
     }
     catch (error) {
@@ -67,13 +76,10 @@ router.get('/:id', async (req,res) => {
 
 router.post('/', async (req,res) => {
     try {
-        const e = new emp({
-            email: req.body.email,
-            password: req.body.password,
-            first_name:req.body.first_name,
-            last_name:req.body.last_name,
-            role:req.body.role,
-            position: req.body.position
+        const e = new dishType({
+
+            type_dish: req.body.type_dish,
+            size:req.body.size,
         });
         var result = await e.save();
         res.send(result);
@@ -84,7 +90,7 @@ router.post('/', async (req,res) => {
 });
 router.put("/:id",  async (req, res) => {
     try {
-        var e = await emp.findOne({_id:req.params.id}).exec();
+        var e = await dishType.findOne({_id:req.params.id}).exec();
         e.set(req.body);
         var result = await e.save();
         res.send(result);
